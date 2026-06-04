@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Argos-AI
 
-## Getting Started
+Landing page for **Argos-AI** — AI-powered security audits for developers. One flat price: **$99 per audit**.
 
-First, run the development server:
+Built with [Next.js 16](https://nextjs.org) (App Router) and [Tailwind CSS v4](https://tailwindcss.com). Dark terminal theme with green accents. Mobile responsive. Statically prerendered.
+
+## Develop
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build   # produces an optimized, statically prerendered build
+npm run start   # serve the production build
+npm run lint
+```
 
-## Learn More
+## Deploy to Vercel
 
-To learn more about Next.js, take a look at the following resources:
+This is a standard Next.js app with no custom server config — it deploys to Vercel with zero setup.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Push this repo to GitHub/GitLab/Bitbucket.
+2. Import it at [vercel.com/new](https://vercel.com/new). Vercel auto-detects Next.js.
+3. Deploy. No environment variables are required.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Or from the CLI:
 
-## Deploy on Vercel
+```bash
+npx vercel        # preview deploy
+npx vercel --prod # production deploy
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Editing the page
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Copy, sections, and audit coverage** live in [`src/app/page.tsx`](src/app/page.tsx).
+- The **Stripe checkout link** is the `STRIPE_CHECKOUT_URL` constant at the top of that file.
+- **Theme colors** (background, foreground, green accent) are CSS variables in [`src/app/globals.css`](src/app/globals.css).
+- **Page title / SEO metadata** is in [`src/app/layout.tsx`](src/app/layout.tsx).
