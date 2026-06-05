@@ -53,7 +53,7 @@ export default function SubmitPage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="box" style={{ padding: 18, backgroundColor: '#11141b', border: '1px solid #1f2330', borderRadius: 10 }}>
-            <div style={{ mb: 16 }}>
+            <div style={{ marginBottom: 16 }}>
               <label style={{ display: 'block', color: '#a9b1c1', marginBottom: 8, fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }} for="repoUrl">GitHub repo URL</label>
               <input
                 id="repoUrl"
@@ -128,4 +128,5 @@ export default function SubmitPage() {
     </div>
   );
 }
+
 
