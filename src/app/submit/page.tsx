@@ -14,15 +14,18 @@ export default function SubmitPage() {
     setStatus("loading");
 
     try {
-      const response = await fetch("http://localhost:4242/audit", {
+      const response = await fetch("https://formspree.io/f/xeewoyvp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({ repo_url: repoUrl, email }),
       });
 
       if (!response.ok) {
         const data = await response.json().catch(() => null);
-        throw new Error(data?.error ?? `Audit request failed (${response.status})`);
+        throw new Error(data?.error ?? `Submission failed (${response.status})`);
       }
 
       setStatus("submitted");
@@ -33,29 +36,28 @@ export default function SubmitPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#0b0d12", color: "#e6e8ee" }}>
+    <div style={{ minHeight: "100vh", backgroundColor: "#0b0d12", color: "#e5e7eb" }}>
       <div style={{ maxWidth: 860, margin: "0 auto", padding: "52px 48px 72px" }}>
-        <header style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderBottom: "1px solid #273247", paddingBottom: 18, marginBottom: 28 }}>
-          <div style={{ fontWeight: 800, fontSize: 18, letterSpacing: "0.18em", textTransform: "uppercase", color: "#6ee7b7" }}>Argos AI</div>
+        <header style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderBottom: "1px solid #1f2937", paddingBottom: 18, marginBottom: 28 }}>
+          <div style={{ fontWeight: 800, fontSize: 18, letterSpacing: "0.18em", textTransform: "uppercase", color: "#6ee7b7" }}>ARGOS AI</div>
           <div style={{ color: "#a9b1c1", textAlign: "right", fontSize: 12 }}>Argos-AI - Automated Audit</div>
         </header>
 
         <h1 style={{ fontSize: 26, margin: "0 0 6px" }}>Security Audit Submission</h1>
-        <p style={{ color: "#a9b1c1", fontSize: 13.5, marginBottom: 28 }}>
-          Submit a GitHub repository after checkout. The audit report will be emailed within 5-10 minutes.
-        </p>
+        <p style={{ color: "#a9b1c1", fontSize: 13.5, marginBottom: 28 }}>Submit a GitHub repository after checkout. The audit report will be emailed within 5-10 minutes.</p>
 
         {status === "submitted" ? (
-          <div style={{ marginTop: 14, borderLeft: "3px solid #34d399", backgroundColor: "#11141b", border: "1px solid #1f2330", borderRadius: 10, padding: 18 }}>
+          <div style={{ marginTop: 14, borderLeft: "3px solid #34d399", backgroundColor: "#11141b", border: "1px solid #1f2937", borderRadius: 10, padding: 18 }}>
             <div style={{ fontWeight: 700, color: "#34d399", marginBottom: 4 }}>Submission received</div>
-            <div style={{ color: "#a9b1c1", fontSize: 13.5 }}>We are cloning and auditing {repoUrl || "your repo"} now. The report will be emailed to {email}.</div>
+            <div style={{ color: "#a9b1c1", fontSize: 13.5 }}>We will email your audit within 5-10 minutes.</div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ backgroundColor: "#11141b", border: "1px solid #1f2330", borderRadius: 10, padding: 18 }}>
+          <form onSubmit={handleSubmit} style={{ backgroundColor: "#11141b", border: "1px solid #1f2937", borderRadius: 10, padding: 18 }}>
             <div style={{ marginBottom: 16 }}>
               <label htmlFor="repoUrl" style={{ display: "block", color: "#a9b1c1", marginBottom: 8, fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>GitHub repo URL</label>
               <input
                 id="repoUrl"
+                name="repo_url"
                 type="url"
                 required
                 placeholder="https://github.com/owner/repo"
@@ -65,9 +67,9 @@ export default function SubmitPage() {
                   width: "100%",
                   padding: "10px 12px",
                   backgroundColor: "#0b0d12",
-                  color: "#e6e8ee",
+                  color: "#e5e7eb",
                   borderRadius: 8,
-                  border: "1px solid #1f2330",
+                  border: "1px solid #1f2937",
                   outline: "none",
                 }}
               />
@@ -77,6 +79,7 @@ export default function SubmitPage() {
               <label htmlFor="email" style={{ display: "block", color: "#a9b1c1", marginBottom: 8, fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>Email address</label>
               <input
                 id="email"
+                name="email"
                 type="email"
                 required
                 placeholder="you@example.com"
@@ -86,17 +89,15 @@ export default function SubmitPage() {
                   width: "100%",
                   padding: "10px 12px",
                   backgroundColor: "#0b0d12",
-                  color: "#e6e8ee",
+                  color: "#e5e7eb",
                   borderRadius: 8,
-                  border: "1px solid #1f2330",
+                  border: "1px solid #1f2937",
                   outline: "none",
                 }}
               />
             </div>
 
-            {status === "error" && (
-              <div style={{ color: "#f87171", fontSize: 13.5, marginBottom: 14 }}>{error}</div>
-            )}
+            {status === "error" && <div style={{ color: "#f87171", fontSize: 13.5, marginBottom: 14 }}>{error}</div>}
 
             <button
               type="submit"
@@ -106,7 +107,7 @@ export default function SubmitPage() {
                 padding: "10px 16px",
                 borderRadius: 8,
                 border: "none",
-                backgroundColor: status === "loading" ? "#1f2330" : "#11141b",
+                backgroundColor: status === "loading" ? "#1f2937" : "#11141b",
                 color: status === "loading" ? "#7d879a" : "#6ee7b7",
                 fontWeight: 700,
                 letterSpacing: "0.12em",
@@ -115,12 +116,12 @@ export default function SubmitPage() {
                 cursor: status === "loading" ? "not-allowed" : "pointer",
               }}
             >
-              {status === "loading" ? "Running audit..." : "Submit repository"}
+              {status === "loading" ? "Submitting..." : "Submit repository"}
             </button>
           </form>
         )}
 
-        <div style={{ marginTop: 40, color: "#7d879a", fontSize: 11, borderTop: "1px solid #273247", paddingTop: 10, textAlign: "right" }}>
+        <div style={{ marginTop: 40, color: "#7d879a", fontSize: 11, borderTop: "1px solid #1f2937", paddingTop: 10, textAlign: "right" }}>
           Argos AI - Powered by Argos-AI Pipeline
         </div>
       </div>
